@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🧠 Churn Intelligence Platform
+# 🧠 ChurnShield AI
 
 ### Enterprise AI-Powered Customer Churn Intelligence & Retention System
 
@@ -25,11 +25,11 @@
 
 | Dashboard KPIs | Single Prediction | Batch Prediction |
 |:-:|:-:|:-:|
-| ![Dashboard](docs/screenshots/dashboard.png) | ![Prediction](docs/screenshots/prediction.png) | ![Batch](docs/screenshots/batch.png) |
+| ![Dashboard](screenshots/Dashboard.png) | ![Prediction](screenshots/SinglePrediction.png) | ![Batch](screenshots/BatchPrediction.png) |
 
 | Analytics Charts | SHAP Explainability | What-If Simulator |
 |:-:|:-:|:-:|
-| ![Analytics](docs/screenshots/analytics.png) | ![SHAP](docs/screenshots/shap.png) | ![WhatIf](docs/screenshots/whatif.png) |
+| ![Analytics](screenshots/Analytics.png) | ![SHAP](screenshots/ShapExplainibility.png) | ![WhatIf](screenshots/what-ifSimulator.png) |
 
 > **To capture screenshots:** Run the platform, open `http://localhost:8501`, and save screenshots to `docs/screenshots/`
 
