@@ -1,0 +1,71 @@
+# ── Environment & Secrets ───────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Python ──────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+.venv/
+venv/
+env/
+pip-wheel-metadata/
+
+# ── Testing & Coverage ───────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+*.coveragerc
+
+# ── Type checking ────────────────────────────────
+.mypy_cache/
+.dmypy.json
+
+# ── Linting ──────────────────────────────────────
+.ruff_cache/
+
+# ── ML artefacts ─────────────────────────────────
+ml/models/saved/*.pkl
+ml/models/saved/*.joblib
+ml/models/saved/*.json
+!ml/models/saved/.gitkeep
+
+# ── Data ─────────────────────────────────────────
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# ── Notebooks (keep structure, not outputs) ──────
+notebooks/.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ── Logs ─────────────────────────────────────────
+logs/
+*.log
+
+# ── Reports ──────────────────────────────────────
+reports/*.pdf
+reports/*.html
+!reports/.gitkeep
+
+# ── Docker ───────────────────────────────────────
+docker/postgres/data/
+
+# ── IDE ──────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+.env

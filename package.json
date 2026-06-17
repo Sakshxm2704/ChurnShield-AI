@@ -1,0 +1,12 @@
+{
+  "name": "churn-platform",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "backend": ".venv/bin/python -m backend.app",
+    "frontend": ".venv/bin/python -m frontend.server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}

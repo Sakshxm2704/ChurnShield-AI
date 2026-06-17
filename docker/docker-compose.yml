@@ -1,0 +1,171 @@
+version: "3.9"
+
+# ================================================================
+# Churn Intelligence Platform — Production Docker Compose
+# ================================================================
+# Services:  postgres · redis · backend · frontend · pgadmin
+#
+# Quick start:
+#   cp .env.example .env && nano .env          # set SECRET_KEY
+#   docker compose up -d                        # start all
+#   docker compose exec backend python -m ml.pipeline --no-shap
+#   docker compose exec backend python -m data.seed_demo
+#   Open: http://localhost:8501  (Dashboard)
+#         http://localhost:8000/docs (API Docs)
+#         http://localhost:5050  (pgAdmin — dev profile)
+# ================================================================
+
+x-common-env: &common-env
+  APP_ENV:        ${APP_ENV:-production}
+  APP_VERSION:    ${APP_VERSION:-1.0.0}
+  SECRET_KEY:     ${SECRET_KEY:-change-me-at-least-32-chars!!!!!!!!!}
+  LOG_LEVEL:      ${LOG_LEVEL:-INFO}
+
+services:
+
+  # ── PostgreSQL 15 ──────────────────────────────────────────────
+  postgres:
+    image: postgres:15-alpine
+    container_name: churn_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB:       ${POSTGRES_DB:-churn_platform}
+      POSTGRES_USER:     ${POSTGRES_USER:-churn_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-churn_password}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-churn_user}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    networks: [churn_net]
+
+  # ── Redis 7 ────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: churn_redis
+    restart: unless-stopped
+    command: >
+      redis-server
+      --requirepass ${REDIS_PASSWORD:-}
+      --maxmemory 512mb
+      --maxmemory-policy allkeys-lru
+      --save 60 1
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks: [churn_net]
+
+  # ── Backend API ────────────────────────────────────────────────
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.backend
+    image: churn-intelligence/backend:latest
+    container_name: churn_backend
+    restart: unless-stopped
+    environment:
+      <<: *common-env
+      DATABASE_URL:                   sqlite:////app/data/churn_platform.db
+      FRONTEND_URL:                   http://localhost:${FRONTEND_PORT:-8501}
+      ACCESS_TOKEN_EXPIRE_MINUTES:    ${ACCESS_TOKEN_EXPIRE_MINUTES:-60}
+      SMTP_HOST:                      ${SMTP_HOST:-smtp.gmail.com}
+      SMTP_PORT:                      ${SMTP_PORT:-587}
+      SMTP_USER:                      ${SMTP_USER:-}
+      SMTP_PASSWORD:                  ${SMTP_PASSWORD:-}
+      ALERT_EMAIL_RECIPIENT:          ${ALERT_EMAIL_RECIPIENT:-}
+      ML_HIGH_RISK_THRESHOLD:         ${ML_HIGH_RISK_THRESHOLD:-0.65}
+      ML_MEDIUM_RISK_THRESHOLD:       ${ML_MEDIUM_RISK_THRESHOLD:-0.35}
+      CACHE_TTL_ANALYTICS:            ${CACHE_TTL_ANALYTICS:-300}
+    ports:
+      - "${API_PORT:-8000}:8000"
+    volumes:
+      - backend_data:/app/data
+      - backend_logs:/app/logs
+      - ml_models:/app/ml/models/saved
+      - ml_reports:/app/reports
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks: [churn_net]
+    labels:
+      - "com.churnplatform.service=backend"
+      - "com.churnplatform.version=${APP_VERSION:-1.0.0}"
+
+  # ── Frontend Dashboard ─────────────────────────────────────────
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.frontend
+    image: churn-intelligence/frontend:latest
+    container_name: churn_frontend
+    restart: unless-stopped
+    environment:
+      API_URL:       http://backend:8000
+      FRONTEND_PORT: 8501
+      APP_ENV:       ${APP_ENV:-production}
+    ports:
+      - "${FRONTEND_PORT:-8501}:8501"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    networks: [churn_net]
+    labels:
+      - "com.churnplatform.service=frontend"
+
+  # ── pgAdmin 4 (dev profile only) ──────────────────────────────
+  pgadmin:
+    image: dpage/pgadmin4:8
+    container_name: churn_pgadmin
+    restart: unless-stopped
+    profiles: [dev]
+    environment:
+      PGADMIN_DEFAULT_EMAIL:    ${PGADMIN_EMAIL:-admin@churnplatform.io}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin1234}
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [churn_net]
+
+volumes:
+  postgres_data:   { driver: local }
+  redis_data:      { driver: local }
+  backend_data:    { driver: local }
+  backend_logs:    { driver: local }
+  ml_models:       { driver: local }
+  ml_reports:      { driver: local }
+  pgadmin_data:    { driver: local }
+
+networks:
+  churn_net:
+    driver: bridge
+    name: churn_intelligence_net

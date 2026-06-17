@@ -1,0 +1,479 @@
+{
+  "best_model": "logistic_regression",
+  "training": {
+    "best_model": "logistic_regression",
+    "auc_scores": {
+      "logistic_regression": 0.770132,
+      "random_forest": 0.748354,
+      "xgboost": 0.736222
+    },
+    "feature_count": 32,
+    "train_size": 5600,
+    "test_size": 1400,
+    "churn_rate_train": 0.37892857142857145,
+    "churn_rate_test": 0.37857142857142856,
+    "evaluation": {
+      "logistic_regression": {
+        "model_name": "logistic_regression",
+        "accuracy": 0.6836,
+        "precision": 0.5608,
+        "recall": 0.7566,
+        "f1": 0.6442,
+        "roc_auc": 0.7701,
+        "threshold": 0.5,
+        "support_0": 870,
+        "support_1": 530,
+        "class_report": {
+          "0": {
+            "precision": 0.8116788321167884,
+            "recall": 0.639080459770115,
+            "f1-score": 0.715112540192926,
+            "support": 870.0
+          },
+          "1": {
+            "precision": 0.5608391608391609,
+            "recall": 0.7566037735849057,
+            "f1-score": 0.6441767068273092,
+            "support": 530.0
+          },
+          "accuracy": 0.6835714285714286,
+          "macro avg": {
+            "precision": 0.6862589964779746,
+            "recall": 0.6978421166775104,
+            "f1-score": 0.6796446235101177,
+            "support": 1400.0
+          },
+          "weighted avg": {
+            "precision": 0.7167180994188294,
+            "recall": 0.6835714285714286,
+            "f1-score": 0.6882582604187997,
+            "support": 1400.0
+          }
+        },
+        "feature_importance": [
+          {
+            "feature": "Contract_Two year",
+            "importance": 0.268381
+          },
+          {
+            "feature": "Contract_One year",
+            "importance": 0.26661
+          },
+          {
+            "feature": "PaymentMethod_Electronic check",
+            "importance": 0.114272
+          },
+          {
+            "feature": "InternetService_Fiber optic",
+            "importance": 0.056145
+          },
+          {
+            "feature": "PaperlessBilling",
+            "importance": 0.047677
+          },
+          {
+            "feature": "SubscriptionType_Premium",
+            "importance": 0.043385
+          },
+          {
+            "feature": "InactiveDays",
+            "importance": 0.029749
+          },
+          {
+            "feature": "OnlineBackup_Yes",
+            "importance": 0.021562
+          },
+          {
+            "feature": "StreamingTV_Yes",
+            "importance": 0.021012
+          },
+          {
+            "feature": "MultipleLines_Yes",
+            "importance": 0.016362
+          },
+          {
+            "feature": "SubscriptionType_Standard",
+            "importance": 0.014439
+          },
+          {
+            "feature": "MultipleLines_No phone service",
+            "importance": 0.013664
+          },
+          {
+            "feature": "TotalCharges",
+            "importance": 0.01058
+          },
+          {
+            "feature": "TechSupport_Yes",
+            "importance": 0.010524
+          },
+          {
+            "feature": "PaymentMethod_Mailed check",
+            "importance": 0.010502
+          },
+          {
+            "feature": "gender",
+            "importance": 0.009618
+          },
+          {
+            "feature": "StreamingMovies_Yes",
+            "importance": 0.0085
+          },
+          {
+            "feature": "OnlineSecurity_Yes",
+            "importance": 0.007869
+          },
+          {
+            "feature": "DeviceProtection_Yes",
+            "importance": 0.00722
+          },
+          {
+            "feature": "tenure",
+            "importance": 0.006281
+          }
+        ]
+      },
+      "random_forest": {
+        "model_name": "random_forest",
+        "accuracy": 0.6879,
+        "precision": 0.566,
+        "recall": 0.7528,
+        "f1": 0.6462,
+        "roc_auc": 0.7484,
+        "threshold": 0.5,
+        "support_0": 870,
+        "support_1": 530,
+        "class_report": {
+          "0": {
+            "precision": 0.8115107913669065,
+            "recall": 0.6482758620689655,
+            "f1-score": 0.7207667731629392,
+            "support": 870.0
+          },
+          "1": {
+            "precision": 0.5659574468085107,
+            "recall": 0.7528301886792453,
+            "f1-score": 0.6461538461538462,
+            "support": 530.0
+          },
+          "accuracy": 0.6878571428571428,
+          "macro avg": {
+            "precision": 0.6887341190877085,
+            "recall": 0.7005530253741055,
+            "f1-score": 0.6834603096583927,
+            "support": 1400.0
+          },
+          "weighted avg": {
+            "precision": 0.7185513109269424,
+            "recall": 0.6878571428571428,
+            "f1-score": 0.6925204507952111,
+            "support": 1400.0
+          }
+        },
+        "feature_importance": [
+          {
+            "feature": "InactiveDays",
+            "importance": 0.17005
+          },
+          {
+            "feature": "tenure",
+            "importance": 0.15331
+          },
+          {
+            "feature": "TotalCharges",
+            "importance": 0.122072
+          },
+          {
+            "feature": "Contract_One year",
+            "importance": 0.108244
+          },
+          {
+            "feature": "MonthlyCharges",
+            "importance": 0.097947
+          },
+          {
+            "feature": "Contract_Two year",
+            "importance": 0.077212
+          },
+          {
+            "feature": "PaymentMethod_Electronic check",
+            "importance": 0.040924
+          },
+          {
+            "feature": "PaperlessBilling",
+            "importance": 0.019918
+          },
+          {
+            "feature": "gender",
+            "importance": 0.01791
+          },
+          {
+            "feature": "Partner",
+            "importance": 0.017193
+          },
+          {
+            "feature": "InternetService_Fiber optic",
+            "importance": 0.016543
+          },
+          {
+            "feature": "Dependents",
+            "importance": 0.014027
+          },
+          {
+            "feature": "MultipleLines_Yes",
+            "importance": 0.013599
+          },
+          {
+            "feature": "StreamingTV_Yes",
+            "importance": 0.012681
+          },
+          {
+            "feature": "DeviceProtection_Yes",
+            "importance": 0.01228
+          },
+          {
+            "feature": "PaymentMethod_Mailed check",
+            "importance": 0.012246
+          },
+          {
+            "feature": "OnlineBackup_Yes",
+            "importance": 0.012236
+          },
+          {
+            "feature": "StreamingMovies_Yes",
+            "importance": 0.012218
+          },
+          {
+            "feature": "TechSupport_Yes",
+            "importance": 0.011431
+          },
+          {
+            "feature": "OnlineSecurity_Yes",
+            "importance": 0.011412
+          }
+        ]
+      },
+      "xgboost": {
+        "model_name": "xgboost",
+        "accuracy": 0.6807,
+        "precision": 0.5835,
+        "recall": 0.5472,
+        "f1": 0.5648,
+        "roc_auc": 0.7362,
+        "threshold": 0.5,
+        "support_0": 870,
+        "support_1": 530,
+        "class_report": {
+          "0": {
+            "precision": 0.7342192691029901,
+            "recall": 0.7620689655172413,
+            "f1-score": 0.7478849407783418,
+            "support": 870.0
+          },
+          "1": {
+            "precision": 0.5835010060362174,
+            "recall": 0.5471698113207547,
+            "f1-score": 0.5647517039922103,
+            "support": 530.0
+          },
+          "accuracy": 0.6807142857142857,
+          "macro avg": {
+            "precision": 0.6588601375696037,
+            "recall": 0.654619388418998,
+            "f1-score": 0.656318322385276,
+            "support": 1400.0
+          },
+          "weighted avg": {
+            "precision": 0.6771616409419976,
+            "recall": 0.6807142857142857,
+            "f1-score": 0.6785559297093063,
+            "support": 1400.0
+          }
+        },
+        "feature_importance": [
+          {
+            "feature": "InactiveDays",
+            "importance": 0.235105
+          },
+          {
+            "feature": "MonthlyCharges",
+            "importance": 0.198506
+          },
+          {
+            "feature": "TotalCharges",
+            "importance": 0.191844
+          },
+          {
+            "feature": "tenure",
+            "importance": 0.109889
+          },
+          {
+            "feature": "PaymentMethod_Electronic check",
+            "importance": 0.037217
+          },
+          {
+            "feature": "Contract_One year",
+            "importance": 0.032085
+          },
+          {
+            "feature": "Contract_Two year",
+            "importance": 0.031759
+          },
+          {
+            "feature": "PaperlessBilling",
+            "importance": 0.017576
+          },
+          {
+            "feature": "Partner",
+            "importance": 0.014504
+          },
+          {
+            "feature": "gender",
+            "importance": 0.012314
+          },
+          {
+            "feature": "OnlineSecurity_Yes",
+            "importance": 0.01148
+          },
+          {
+            "feature": "Dependents",
+            "importance": 0.011208
+          },
+          {
+            "feature": "InternetService_Fiber optic",
+            "importance": 0.010884
+          },
+          {
+            "feature": "DeviceProtection_Yes",
+            "importance": 0.01048
+          },
+          {
+            "feature": "TechSupport_Yes",
+            "importance": 0.010356
+          },
+          {
+            "feature": "MultipleLines_Yes",
+            "importance": 0.009796
+          },
+          {
+            "feature": "StreamingTV_Yes",
+            "importance": 0.009676
+          },
+          {
+            "feature": "StreamingMovies_Yes",
+            "importance": 0.009029
+          },
+          {
+            "feature": "OnlineBackup_Yes",
+            "importance": 0.008724
+          },
+          {
+            "feature": "PaymentMethod_Credit card (automatic)",
+            "importance": 0.008589
+          }
+        ]
+      }
+    },
+    "xgboost_available": false
+  },
+  "segment_profile": {
+    "Inactive": {
+      "count": 2059,
+      "pct_of_total": 29.4,
+      "avg_tenure": 17.49,
+      "median_tenure": 17.0,
+      "avg_MonthlyCharges": 79.07,
+      "median_MonthlyCharges": 80.87,
+      "avg_InactiveDays": 52.05,
+      "median_InactiveDays": 53.0,
+      "avg_churn_probability": 0.71,
+      "median_churn_probability": 0.71,
+      "avg_risk_score": 84.59,
+      "median_risk_score": 89.0,
+      "avg_service_count": 2.45,
+      "median_service_count": 2.0,
+      "churn_count": 1980,
+      "churn_rate": 96.2
+    },
+    "Loyal": {
+      "count": 1873,
+      "pct_of_total": 26.8,
+      "avg_tenure": 34.18,
+      "median_tenure": 32.0,
+      "avg_MonthlyCharges": 83.96,
+      "median_MonthlyCharges": 86.87,
+      "avg_InactiveDays": 14.09,
+      "median_InactiveDays": 13.0,
+      "avg_churn_probability": 0.36,
+      "median_churn_probability": 0.28,
+      "avg_risk_score": 28.54,
+      "median_risk_score": 10.0,
+      "avg_service_count": 3.34,
+      "median_service_count": 3.0,
+      "churn_count": 436,
+      "churn_rate": 23.3
+    },
+    "Premium": {
+      "count": 1896,
+      "pct_of_total": 27.1,
+      "avg_tenure": 41.81,
+      "median_tenure": 42.0,
+      "avg_MonthlyCharges": 50.79,
+      "median_MonthlyCharges": 53.84,
+      "avg_InactiveDays": 15.16,
+      "median_InactiveDays": 15.0,
+      "avg_churn_probability": 0.23,
+      "median_churn_probability": 0.21,
+      "avg_risk_score": 9.75,
+      "median_risk_score": 5.0,
+      "avg_service_count": 0.98,
+      "median_service_count": 1.0,
+      "churn_count": 44,
+      "churn_rate": 2.3
+    },
+    "Risky": {
+      "count": 1172,
+      "pct_of_total": 16.7,
+      "avg_tenure": 17.47,
+      "median_tenure": 17.0,
+      "avg_MonthlyCharges": 33.95,
+      "median_MonthlyCharges": 28.84,
+      "avg_InactiveDays": 47.4,
+      "median_InactiveDays": 48.5,
+      "avg_churn_probability": 0.64,
+      "median_churn_probability": 0.63,
+      "avg_risk_score": 75.49,
+      "median_risk_score": 79.0,
+      "avg_service_count": 0.44,
+      "median_service_count": 0.0,
+      "churn_count": 1081,
+      "churn_rate": 92.2
+    }
+  },
+  "revenue_risk": {
+    "total_customers": 7000,
+    "high_risk_count": 2182,
+    "medium_risk_count": 2082,
+    "low_risk_count": 2736,
+    "total_monthly_revenue": 456142.33,
+    "expected_monthly_loss": 223220.71,
+    "expected_annual_loss": 2678648.56,
+    "worst_case_annual_loss": 1900481.64,
+    "recoverable_revenue_annual": 1239207.0,
+    "net_revenue_at_risk_annual": 1439441.56,
+    "avg_churn_probability": 0.4728,
+    "total_ltv_at_risk": 3082276.8,
+    "revenue_by_segment": {
+      "Inactive": 1392574.11,
+      "Loyal": 689790.29,
+      "Premium": 286667.31,
+      "Risky": 309616.86
+    },
+    "churn_rate_by_segment": {
+      "Inactive": 0.7057,
+      "Loyal": 0.3581,
+      "Premium": 0.2317,
+      "Risky": 0.6373
+    }
+  }
+}

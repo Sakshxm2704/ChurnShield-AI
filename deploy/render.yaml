@@ -1,0 +1,92 @@
+# ============================================================
+# deploy/render.yaml
+# Render.com deployment configuration
+# Docs: https://render.com/docs/blueprint-spec
+# ============================================================
+# Deploy with: Connect this repo to Render → New Blueprint
+# ============================================================
+
+services:
+  # ── Backend API ──────────────────────────────────────────────
+  - type: web
+    name: churn-intelligence-api
+    runtime: python
+    plan: starter         # upgrade to standard for production
+    region: oregon
+    branch: main
+
+    buildCommand: |
+      pip install --upgrade pip
+      pip install flask werkzeug PyJWT scikit-learn joblib numpy pandas python-dotenv
+      python -m ml.pipeline --no-shap --rows 5000
+      python -m data.seed_demo
+
+    startCommand: |
+      gunicorn "backend.app:create_app()" \
+        --bind 0.0.0.0:$PORT \
+        --workers 2 \
+        --timeout 120 \
+        --log-level info
+
+    healthCheckPath: /health
+
+    envVars:
+      - key:   APP_ENV
+        value: production
+      - key:   APP_VERSION
+        value: "1.0.0"
+      - key:   SECRET_KEY
+        generateValue: true          # Render auto-generates a secure random value
+      - key:   DEBUG
+        value: "false"
+      - key:   LOG_LEVEL
+        value: INFO
+      - key:   ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "60"
+      - key:   DATABASE_URL
+        value: "sqlite:///./data/churn_platform.db"
+      - key:   FRONTEND_URL
+        value: "https://your-app.streamlit.app"   # Set after Streamlit deploy
+      - key:   SMTP_HOST
+        value: "smtp.gmail.com"
+      - key:   SMTP_PORT
+        value: "587"
+      - key:   SMTP_USER
+        sync: false    # Set in Render dashboard
+      - key:   SMTP_PASSWORD
+        sync: false    # Set in Render dashboard
+      - key:   ALERT_EMAIL_RECIPIENT
+        sync: false    # Set in Render dashboard
+
+    disk:
+      name:      churn-data
+      mountPath: /opt/render/project/src/data
+      sizeGB:    1
+
+  # ── Frontend Dashboard ────────────────────────────────────────
+  - type: web
+    name: churn-intelligence-dashboard
+    runtime: python
+    plan: starter
+    region: oregon
+    branch: main
+
+    buildCommand: |
+      pip install --upgrade pip
+      pip install flask python-dotenv
+
+    startCommand: |
+      python -m frontend.server
+
+    healthCheckPath: /health
+
+    envVars:
+      - key:   API_URL
+        fromService:
+          name:     churn-intelligence-api
+          type:     web
+          property: host
+      - key:   FRONTEND_PORT
+        value: "10000"   # Render assigns PORT env var; this is our internal default
+      - key:   APP_ENV
+        value: production

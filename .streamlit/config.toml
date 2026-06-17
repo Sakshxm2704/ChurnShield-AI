@@ -1,0 +1,22 @@
+# ============================================================
+# .streamlit/config.toml
+# Streamlit Cloud configuration
+# ============================================================
+[theme]
+primaryColor       = "#6366f1"
+backgroundColor    = "#0d1117"
+secondaryBackgroundColor = "#1a1d27"
+textColor          = "#e2e8f0"
+font               = "sans serif"
+
+[server]
+headless           = true
+enableCORS         = false
+enableXsrfProtection = true
+maxUploadSize      = 50     # MB
+
+[browser]
+gatherUsageStats   = false
+
+[runner]
+fastReruns         = true
